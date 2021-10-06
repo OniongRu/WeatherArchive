@@ -25,10 +25,10 @@ namespace WeatherArchive.Parsers
                     ICell cell;
                     
                     //Date + Time
-                    cell = row.GetCell(0);
-                    if (cell != null && row.GetCell(1)!=null)
+                    cell = row.GetCell((int) WeatherConditionsFields.Date);
+                    if (cell != null && row.GetCell((int) WeatherConditionsFields.Time)!=null)
                     {
-                        var s = row.GetCell(0).ToString()+" "+row.GetCell(1).ToString();
+                        var s = cell.ToString()+" "+row.GetCell((int) WeatherConditionsFields.Time).ToString();
                         DateTime dt = new DateTime();
                         var rusCulture = CultureInfo.GetCultureInfo("ru-RU");
                         if (DateTime.TryParse(s, rusCulture, DateTimeStyles.None, out dt))
@@ -47,7 +47,7 @@ namespace WeatherArchive.Parsers
                     
                     
                     //T
-                    cell = row.GetCell(2);
+                    cell = row.GetCell((int) WeatherConditionsFields.T);
                     if (cell != null)
                     {
                         float num=0;
@@ -66,7 +66,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //влажность
-                    cell = row.GetCell(3);
+                    cell = row.GetCell((int) WeatherConditionsFields.Humidity);
                     if (cell != null)
                     {
                         float num=0;
@@ -85,7 +85,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //Td
-                    cell = row.GetCell(4);
+                    cell = row.GetCell((int) WeatherConditionsFields.DP);
                     if (cell != null)
                     {
                         float num=0;
@@ -104,7 +104,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //Давление
-                    cell = row.GetCell(5);
+                    cell = row.GetCell((int) WeatherConditionsFields.AtmPress);
                     if (cell != null)
                     {
                         ushort num=0;
@@ -123,7 +123,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //Ветере направ.
-                    cell = row.GetCell(6);
+                    cell = row.GetCell((int) WeatherConditionsFields.WindDir);
                     if (cell != null)
                     {
                         rowCondition.windDirection = cell.ToString();
@@ -134,7 +134,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //скорость ветра
-                    cell = row.GetCell(7);
+                    cell = row.GetCell((int) WeatherConditionsFields.WindS);
                     if (cell != null)
                     {
                         ushort num=0;
@@ -153,7 +153,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //Облачность
-                    cell = row.GetCell(8);
+                    cell = row.GetCell((int) WeatherConditionsFields.Cloud);
                     if (cell != null)
                     {
                         ushort num=0;
@@ -172,7 +172,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //h
-                    cell = row.GetCell(9);
+                    cell = row.GetCell((int) WeatherConditionsFields.DownBorder);
                     if (cell != null)
                     {
                         ushort num=0;
@@ -191,7 +191,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //vv
-                    cell = row.GetCell(10);
+                    cell = row.GetCell((int) WeatherConditionsFields.Horizont);
                     if (cell != null)
                     {
                         ushort num=0;
@@ -210,7 +210,7 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //погодное явление
-                    cell = row.GetCell(11);
+                    cell = row.GetCell((int) WeatherConditionsFields.Phenomena);
                     if (cell != null)
                     {
                         rowCondition.weatherPhenomena = cell.ToString();

@@ -18,19 +18,28 @@ namespace WeatherArchive.Repository
 
         public void addWeatherConditions(List<WeatherCondition> conditions)
         {
+            List<WeatherCondition> addConditions = new List<WeatherCondition>();
+            List<WeatherCondition> updateConditions = new List<WeatherCondition>();
             if (conditions != null)
             {
                 foreach (var condition in conditions)
                 {
                     if (appDbContent.WeatherCondition.Any(o => o.date == condition.date))
                     {
-                        appDbContent.WeatherCondition.Update(condition);
+                        updateConditions.Add(condition);
+                        //appDbContent.WeatherCondition.Update(condition);
                     }
                     else
                     {
-                        appDbContent.WeatherCondition.Add(condition);
+                        addConditions.Add(condition);
+                        //appDbContent.WeatherCondition.Add(condition);
                     }
                 } 
+                if(addConditions.Any())
+                    appDbContent.WeatherCondition.AddRange(addConditions);
+                if(updateConditions.Any())
+                    appDbContent.WeatherCondition.UpdateRange(updateConditions);
+                
                 appDbContent.SaveChanges();
             }
             
