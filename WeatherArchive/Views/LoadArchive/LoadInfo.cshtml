@@ -1,0 +1,15 @@
+﻿@using WeatherArchive.Controllers
+<div class="container">
+    
+    <form asp-action="AddFile" asp-controller="LoadArchive" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <p><input type="file" name="uploads" required multiple title="Загрузите один или несколько файлов"></p>
+        </div>
+        <div class="row">
+            <input type="submit" value="Загрузить"/>
+        </div>
+    </form>
+    <br/>
+    <br/>
+    
+</div>

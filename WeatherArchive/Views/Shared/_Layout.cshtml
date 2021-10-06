@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/personal-style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Архив погодных условий в г.Москве</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/WeatherConditionsTable/Checkout">Просмотр архивов</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/LoadArchive/LoadInfo">Загрузка архивов</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container mt-5">
+  @RenderBody()
+</div>
+<footer class="container">
+    <p class="float-end"><a href="#">Back to top</a></p>
+  <p>Сделано в рамках текстового задания для «DynamicSun LLC»</p>
+  <p>Юдахин Юрий Юрьевич     <a href="https://hh.ru/resume/cc28ed83ff0897f9ec0039ed1f335073624955">Резюме на hh.ru</a> </p>
+</footer>
+<script src="~/js/bootstrap.min.js"></script>
+</body>
+</html>

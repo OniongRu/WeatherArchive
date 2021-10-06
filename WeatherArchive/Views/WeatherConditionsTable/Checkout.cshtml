@@ -1,0 +1,56 @@
+﻿@using WeatherArchive.Controllers
+@model WeatherConditionTableViewModel
+<div class="container">
+    <div class="col">
+        <div class="row-md">
+        <h3>Выбор даты</h3>
+        </div>
+        <form asp-action="Checkout" method="post" class="form-horizontal">
+            <div class="form-group">
+                
+                <label asp-for="year">Год</label>
+                <div class="row-md">
+                    <select asp-for="year" asp-items="ViewBag.Years"></select></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="month">Месяц</label>
+                <div class="row-md">
+                    <select asp-for="month" asp-items="ViewBag.Months"></select>
+                </div>
+            </div>
+
+            <div class="row-md">
+                <input class="btn btn-success" type="submit" value="Отобразить таблицу"/>
+                <br/>
+                <br/>
+            </div>
+            <div class="row-md">
+            @{
+                if (Model != null)
+                {
+                    if (Model.month != 0 && Model.year == 0)
+                    {
+                        <h3>Нельзя вводить месяц без года!</h3>
+                    }
+                    else
+                    {
+                        if (Model.allWeatherCondition.Any())
+                        {
+                            @Html.Partial("ConditionsTable", Model)
+                        }
+                        else
+                        {
+                            <h3>Нет погодных отчетов за данное время</h3>
+                        }
+                    }
+
+                }
+                else
+                {
+                    <h3>Введите время, чтобы просмотреть отчет</h3>
+                }
+            }
+             </div>
+        </form>
+    </div>
+</div>

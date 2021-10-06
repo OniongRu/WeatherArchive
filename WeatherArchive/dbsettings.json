@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-A5L0VN3\\MSSQLTEST;Database=weatherDb;User Id=sa;Password=sa;"
+  }
+}
