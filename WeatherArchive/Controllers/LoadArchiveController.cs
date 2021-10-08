@@ -33,8 +33,6 @@ namespace WeatherArchive.Controllers
         
         private readonly IAllWeatherConditions _allWeatherConditions;
 
-        private LoadArchiveViewModel loadResult;
-        
         private int numberAddRows;
             
         public LoadArchiveController(IAllWeatherConditions iallWeatherConditions, IWebHostEnvironment appEnvironment)

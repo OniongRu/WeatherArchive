@@ -1,78 +1,80 @@
 ﻿@model WeatherConditionTableViewModel
 
 
-<table class="table table-striped" style="width:100%">
-    <thead class="thead-dark">
-    <tr align="center">
-        <th scope="col">Дата</th>
-        <th scope="col">Время</th>
-        <th scope="col">T</th>
-        <th scope="col">Относительная влажность</th>
-        <th scope="col">Td</th>
-        <th scope="col">Атмосферное давление</th>
-        <th scope="col">Направление ветра</th>
-        <th scope="col">Скорость ветра</th>
-        <th scope="col">Облачность</th>
-        <th scope="col">h</th>
-        <th scope="col">VV</th>
-        <th scope="col">Погодные явления</th>
-    </tr>
-    </thead>
-    <tbody>
-    @{
-        foreach (var condition in Model.allWeatherCondition)
-        {
-            <tr align="center">
-                <th scope="row"  | center>@condition.date.ToShortDateString()</th>
-                <th>@condition.date.TimeOfDay</th>
-                <th>@condition.temperature</th>
-                <th>@condition.relativeHumidity</th>
-                <th>@condition.dewPoint</th>
-                <th>@condition.atmosphericPressure</th>
-                <th>@condition.windDirection</th>
-                @if (@condition.windSpeed != null)
+<div class="container">
+    <table class="table table-fluid" id="myTable">
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Время</th>
+            <th>T</th>
+            <th>Относительная влажность</th>
+            <th>Td</th>
+            <th>Атмосферное давление</th>
+            <th>Направление ветра</th>
+            <th>Скорость ветра</th>
+            <th>Облачность</th>
+            <th>h</th>
+            <th>VV</th>
+            <th>Погодные явления</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+                foreach (var condition in Model.allWeatherCondition)
                 {
-                    <th>@condition.windSpeed</th>
+                    <tr>
+                        <td>@condition.date.ToShortDateString()</td>
+                        <td>@condition.date.TimeOfDay</td>
+                        <td>@condition.temperature</td>
+                        <td>@condition.relativeHumidity</td>
+                        <td>@condition.dewPoint</td>
+                        <td>@condition.atmosphericPressure</td>
+                        <td>@condition.windDirection</td>
+                        @if (@condition.windSpeed != null)
+                        {
+                            <td>@condition.windSpeed</td>
+                        }
+                        else
+                        {
+                            <td>--</td>
+                        }
+                        @if (@condition.cloudCover != null)
+                        {
+                            <td>@condition.cloudCover</td>
+                        }
+                        else
+                        {
+                            <td>--</td>
+                        }
+                        @if (@condition.downBorderCloudCover != null)
+                        {
+                            <td>@condition.downBorderCloudCover</td>
+                        }
+                        else
+                        {
+                            <td>--</td>
+                        }
+                        @if (@condition.horizontalView != null)
+                        {
+                            <td>@condition.horizontalView</td>
+                        }
+                        else
+                        {
+                            <td>--</td>
+                        }
+                        @if (@condition.weatherPhenomena != null)
+                        {
+                            <td>@condition.weatherPhenomena</td>
+                        }
+                        else
+                        {
+                            <td>--</td>
+                        }
+                        
+                    </tr>
                 }
-                else
-                {
-                    <th>--</th>
-                }
-                @if (@condition.cloudCover != null)
-                {
-                    <th>@condition.cloudCover</th>
-                }
-                else
-                {
-                    <th>--</th>
-                }
-                @if (@condition.downBorderCloudCover != null)
-                {
-                    <th>@condition.downBorderCloudCover</th>
-                }
-                else
-                {
-                    <th>--</th>
-                }
-                @if (@condition.horizontalView != null)
-                {
-                    <th>@condition.horizontalView</th>
-                }
-                else
-                {
-                    <th>--</th>
-                }
-                @if (@condition.weatherPhenomena != null)
-                {
-                    <th>@condition.weatherPhenomena</th>
-                }
-                else
-                {
-                    <th>--</th>
-                }
-                
-            </tr>
-        }
-    }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+</div>
