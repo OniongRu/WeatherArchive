@@ -8,3 +8,9 @@ Technologies used:
 3. Bootstrap
 4. JSON
 5. table style: https://cdn.datatables.net/
+
+
+In new Ver change varibles names in WeatherCondition -> update db
+(Rider ex:)
+// ef migrations add someName
+// ef database update
