@@ -3,42 +3,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
+using Microsoft.Extensions.Logging;
 using WeatherArchive.interfaces;
 using WeatherArchive.Models;
 using WeatherArchive.Parsers;
-using WeatherArchive.ViewModels;
 
 namespace WeatherArchive.Controllers
 {
-    public class FileModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Path { get; set; }
-    }
-
-    
     public class LoadArchiveController : Controller
     {
-
         
-        private IWebHostEnvironment _appEnvironment;
+        private readonly ILogger<LoadArchiveController> _logger;
         
         private readonly IAllWeatherConditions _allWeatherConditions;
 
         private int numberAddRows;
             
-        public LoadArchiveController(IAllWeatherConditions iallWeatherConditions, IWebHostEnvironment appEnvironment)
+        public LoadArchiveController(IAllWeatherConditions iallWeatherConditions, ILogger<LoadArchiveController> logger)
         {
             _allWeatherConditions = iallWeatherConditions;
-            _appEnvironment = appEnvironment;
+            _logger = logger;
         }
 
         public IActionResult LoadInfo()
@@ -53,23 +39,24 @@ namespace WeatherArchive.Controllers
             
             foreach(var uploadedFile in uploads)
             {
-                // путь к папке Files
-                string path = "/Files/" + uploadedFile.FileName;
+                // формат обрабатываемого файла
+                string fileFormat = Path.GetExtension(uploadedFile.FileName);
                 
-                // сохраняем файл в папку Files в каталоге wwwroot
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                using (var fileStream = uploadedFile.OpenReadStream())
                 {
-                    await uploadedFile.CopyToAsync(fileStream);
-                    FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
+                    List<WeatherCondition> report = ExcelParser.OpenExcel(fileStream,fileFormat);
+                    if (report == null) continue;
+                    if (report.Any())
+                    {
+                        _allWeatherConditions.addWeatherConditions(report);
+                        _logger.LogInformation("add new "+report.Count+"rows");
+                    }
+                    else
+                    {
+                        _logger.LogInformation("Excel file does not contain any matching lines!");
+                    }
                 }
                 
-                List<WeatherCondition> report = ExcelParser.OpenExcel(_appEnvironment.WebRootPath +path);
-                if (report == null) continue;
-                if (report.Any())
-                {
-                    _allWeatherConditions.addWeatherConditions(report);
-                    Console.WriteLine("add new "+report.Count+"rows");
-                }
             }
             return RedirectToAction("LoadInfo");
         }

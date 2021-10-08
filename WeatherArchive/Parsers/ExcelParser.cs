@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -14,7 +15,7 @@ namespace WeatherArchive.Parsers
     
     public class ExcelParser
     {
-
+        private static ILogger logger = LoggerFactory.Create(builder => { builder.AddConsole(); }).CreateLogger<ExcelParser>();
         public static WeatherCondition getWeatherConditionFromRow(IRow row)
         {
             WeatherCondition rowCondition = new WeatherCondition();
@@ -228,29 +229,28 @@ namespace WeatherArchive.Parsers
             return null;
         }
         
-        public static List<WeatherCondition> OpenExcel(string path)
+        public static List<WeatherCondition> OpenExcel(Stream file, string fileFormat)
         {
             List<WeatherCondition> conditionsFromExcel = new List<WeatherCondition>();
-            FileStream fs;
             IWorkbook wk = null;
             try
             {
-                using (fs = File.OpenRead (path)) // Открываем файл
+                using (file) // Открываем файл
                 {
-                    if(Path.GetExtension(fs.Name).Equals(".xlsx"))
-                    {
-                        wk = new XSSFWorkbook (fs); // Записать xls -> wk 
-                    }
-                    else if (Path.GetExtension(fs.Name).Equals(".xls"))
-                    {
-                        wk = new HSSFWorkbook (fs);
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                        
-                       
+                    
+                    if(fileFormat.Equals(".xlsx"))
+                   {
+                       wk = new XSSFWorkbook (file); // Записать xls -> wk 
+                   }
+                   else if (fileFormat.Equals(".xls"))
+                   {
+                       wk = new HSSFWorkbook (file);
+                   }
+                   else
+                   {
+                       logger.LogInformation("Wrong file format");
+                       return null;
+                   }
                     for (int i = 0; i <wk.NumberOfSheets; i ++) // NumberOfSheets - общее количество таблиц
                     {
                         ISheet sheet = wk.GetSheetAt (i); // Считать данные текущего листа
@@ -285,8 +285,9 @@ namespace WeatherArchive.Parsers
             }
             catch (Exception)
             {
-                Console.WriteLine("Exception!!!");
+                logger.LogInformation("Exception in parsing file");
             }
+            logger.LogInformation("File parse successfully");
             return conditionsFromExcel;
          }
         

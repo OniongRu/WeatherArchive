@@ -47,12 +47,7 @@ namespace WeatherArchive.Repository
 
         public IEnumerable<WeatherCondition> weatherConditions
         {
-            get => appDbContent.WeatherCondition; 
-            set => throw new System.NotImplementedException();
-        }
-        public WeatherCondition getObjectWeatherCondition(int weatherCondition)
-        {
-            throw new System.NotImplementedException();
+            get => appDbContent.WeatherCondition;
         }
     }
 }
