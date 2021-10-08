@@ -7,3 +7,4 @@ Technologies used:
 2. NPOI
 3. Bootstrap
 4. JSON
+5. table style: https://cdn.datatables.net/
