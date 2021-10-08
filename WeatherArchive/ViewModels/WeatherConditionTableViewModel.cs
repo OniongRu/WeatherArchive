@@ -5,8 +5,8 @@ namespace WeatherArchive.ViewModels
 {
     public class WeatherConditionTableViewModel
     {
-        public ushort year { get; set; }
-        public ushort month { get; set; }
-        public IEnumerable<WeatherCondition> allWeatherCondition { get; set; }
+        public ushort Year { get; set; }
+        public ushort Month { get; set; }
+        public IEnumerable<WeatherCondition> AllWeatherCondition { get; set; }
     }
 }

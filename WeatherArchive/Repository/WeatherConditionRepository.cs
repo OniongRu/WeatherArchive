@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WeatherArchive.DBInteraction;
 using WeatherArchive.interfaces;
@@ -9,14 +8,14 @@ namespace WeatherArchive.Repository
 {
     public class WeatherConditionRepository : IAllWeatherConditions
     {
-        private readonly AppDBContent appDbContent;
+        private readonly AppDBContent _appDbContent;
 
         public WeatherConditionRepository(AppDBContent appDbContent)
         {
-            this.appDbContent = appDbContent;
+            this._appDbContent = appDbContent;
         }
 
-        public void addWeatherConditions(List<WeatherCondition> conditions)
+        public void AddWeatherConditions(List<WeatherCondition> conditions)
         {
             List<WeatherCondition> addConditions = new List<WeatherCondition>();
             List<WeatherCondition> updateConditions = new List<WeatherCondition>();
@@ -24,7 +23,7 @@ namespace WeatherArchive.Repository
             {
                 foreach (var condition in conditions)
                 {
-                    if (appDbContent.WeatherCondition.Any(o => o.date == condition.date))
+                    if (_appDbContent.WeatherCondition.Any(o => o.Date == condition.Date))
                     {
                         updateConditions.Add(condition);
                         //appDbContent.WeatherCondition.Update(condition);
@@ -36,18 +35,18 @@ namespace WeatherArchive.Repository
                     }
                 } 
                 if(addConditions.Any())
-                    appDbContent.WeatherCondition.AddRange(addConditions);
+                    _appDbContent.WeatherCondition.AddRange(addConditions);
                 if(updateConditions.Any())
-                    appDbContent.WeatherCondition.UpdateRange(updateConditions);
+                    _appDbContent.WeatherCondition.UpdateRange(updateConditions);
                 
-                appDbContent.SaveChanges();
+                _appDbContent.SaveChanges();
             }
             
         }
 
-        public IEnumerable<WeatherCondition> weatherConditions
+        public IEnumerable<WeatherCondition> WeatherConditions
         {
-            get => appDbContent.WeatherCondition;
+            get => _appDbContent.WeatherCondition;
         }
     }
 }

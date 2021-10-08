@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,8 +18,6 @@ namespace WeatherArchive.Controllers
         
         private readonly IAllWeatherConditions _allWeatherConditions;
 
-        private int numberAddRows;
-            
         public LoadArchiveController(IAllWeatherConditions iallWeatherConditions, ILogger<LoadArchiveController> logger)
         {
             _allWeatherConditions = iallWeatherConditions;
@@ -34,7 +31,7 @@ namespace WeatherArchive.Controllers
         }
 
         [HttpPost]
-        public  async Task<IActionResult>  AddFile(IFormFileCollection uploads)
+        public async Task<IActionResult> AddFile(IFormFileCollection uploads)
         {
             
             foreach(var uploadedFile in uploads)
@@ -48,7 +45,7 @@ namespace WeatherArchive.Controllers
                     if (report == null) continue;
                     if (report.Any())
                     {
-                        _allWeatherConditions.addWeatherConditions(report);
+                        _allWeatherConditions.AddWeatherConditions(report);
                         _logger.LogInformation("add new "+report.Count+"rows");
                     }
                     else

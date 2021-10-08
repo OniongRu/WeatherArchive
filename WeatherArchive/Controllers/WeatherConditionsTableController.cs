@@ -1,62 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WeatherArchive.interfaces;
-using WeatherArchive.Models;
 using WeatherArchive.ViewModels;
 
 namespace WeatherArchive.Controllers
 {
     public class Month
     {
-        public int num { get; set; }
-        public string name { get; set; }
+        public int Num { get; set; }
+        public string Name { get; set; }
     }
 
     public class Year
     {
-        public int yearNum { get; set; }
-        public string yearStr { get; set; }
+        public int YearNum { get; set; }
+        public string YearStr { get; set; }
     }
         public class WeatherConditionsTableController : Controller
     {
-        private IEnumerable<Month> months = new List<Month>
+        private readonly IEnumerable<Month> _months = new List<Month>
         {
-            new Month { num = 0, name = "Месяц не выбран" },
-            new Month { num = 1, name = "Январь" },
-            new Month { num = 2, name = "Февраль" },
-            new Month { num = 3, name = "Март" },
-            new Month { num = 4, name = "Апрель" },
-            new Month { num = 5, name = "Май" },
-            new Month { num = 6, name = "Июнь" },
-            new Month { num = 7, name = "Июль" },
-            new Month { num = 8, name = "Август" },
-            new Month { num = 9, name = "Сентябрь" },
-            new Month { num = 10, name = "Октябрь" },
-            new Month { num = 11, name = "Ноябрь" },
-            new Month { num = 12, name = "Декабрь" }
+            new Month { Num = 0, Name = "Месяц не выбран" },
+            new Month { Num = 1, Name = "Январь" },
+            new Month { Num = 2, Name = "Февраль" },
+            new Month { Num = 3, Name = "Март" },
+            new Month { Num = 4, Name = "Апрель" },
+            new Month { Num = 5, Name = "Май" },
+            new Month { Num = 6, Name = "Июнь" },
+            new Month { Num = 7, Name = "Июль" },
+            new Month { Num = 8, Name = "Август" },
+            new Month { Num = 9, Name = "Сентябрь" },
+            new Month { Num = 10, Name = "Октябрь" },
+            new Month { Num = 11, Name = "Ноябрь" },
+            new Month { Num = 12, Name = "Декабрь" }
         };
 
-        private IEnumerable<Year> availableYears()
+        private IEnumerable<Year> AvailableYears()
         {
-            var avalible = _allWeatherConditions.weatherConditions.GroupBy(g => g.date.Year);
-            List<Year> avalible_years = new List<Year>();
-            avalible_years.Add(new Year
+            var avalible = _allWeatherConditions.WeatherConditions.GroupBy(g => g.Date.Year);
+            List<Year> avalibleYears = new List<Year>();
+            avalibleYears.Add(new Year
             {
-                yearNum = 0,
-                yearStr = "Год не выбран"
+                YearNum = 0,
+                YearStr = "Год не выбран"
             });
             foreach (var year in avalible)
             {
-                avalible_years.Add(new Year
+                avalibleYears.Add(new Year
                 {
-                    yearNum = year.Key,
-                    yearStr = year.Key.ToString()
+                    YearNum = year.Key,
+                    YearStr = year.Key.ToString()
                 });
             }
-            return avalible_years.OrderBy(i=>i.yearNum);
+            return avalibleYears.OrderBy(i=>i.YearNum);
         }
 
         private readonly IAllWeatherConditions _allWeatherConditions;
@@ -68,39 +66,39 @@ namespace WeatherArchive.Controllers
         
         public IActionResult Checkout()
         {
-            ViewBag.Years = new SelectList(availableYears(), "yearNum", "yearStr");
-            ViewBag.Months = new SelectList(months, "num", "name");
+            ViewBag.SelectYears = new SelectList(AvailableYears(), "YearNum", "YearStr");
+            ViewBag.SelectMonths = new SelectList(_months, "Num", "Name");
             return View();
         }
         
         [HttpPost]
         public IActionResult Checkout(WeatherConditionTableViewModel weather)
         {
-            ViewBag.Years = new SelectList(availableYears(), "yearNum", "yearStr");
-            ViewBag.Months = new SelectList(months, "num", "name");
+            ViewBag.SelectYears = new SelectList(AvailableYears(), "YearNum", "YearStr");
+            ViewBag.SelectMonths = new SelectList(_months, "Num", "Name");
             WeatherConditionTableViewModel conditionObject = null;
-            if (weather.year!=0)
+            if (weather.Year!=0)
             {
-                if (weather.month != 0)
+                if (weather.Month != 0)
                 {
                     conditionObject = new WeatherConditionTableViewModel()
                     {
-                        year = weather.year,
-                        month = weather.month,
-                        allWeatherCondition = (from weatherCondition in _allWeatherConditions.weatherConditions 
-                            where weatherCondition.date.Year==weather.year && weatherCondition.date.Month == weather.month 
-                            select weatherCondition).OrderBy(i=>i.date).ToList()
+                        Year = weather.Year,
+                        Month = weather.Month,
+                        AllWeatherCondition = (from weatherCondition in _allWeatherConditions.WeatherConditions 
+                            where weatherCondition.Date.Year==weather.Year && weatherCondition.Date.Month == weather.Month 
+                            select weatherCondition).OrderBy(i=>i.Date).ToList()
                     };
                 }
                 else
                 {
                     conditionObject = new WeatherConditionTableViewModel()
                     {
-                        year = weather.year,
-                        month = weather.month,
-                        allWeatherCondition = (from weatherCondition in _allWeatherConditions.weatherConditions 
-                            where weatherCondition.date.Year==weather.year 
-                            select weatherCondition).OrderBy(i=>i.date).ToList()
+                        Year = weather.Year,
+                        Month = weather.Month,
+                        AllWeatherCondition = (from weatherCondition in _allWeatherConditions.WeatherConditions 
+                            where weatherCondition.Date.Year==weather.Year 
+                            select weatherCondition).OrderBy(i=>i.Date).ToList()
                     };
                 }
             }
@@ -108,9 +106,9 @@ namespace WeatherArchive.Controllers
             {
                 conditionObject = new WeatherConditionTableViewModel()
                 {
-                    year = weather.year,
-                    month = weather.month,
-                    allWeatherCondition = _allWeatherConditions.weatherConditions.OrderBy(i=>i.date)
+                    Year = weather.Year,
+                    Month = weather.Month,
+                    AllWeatherCondition = _allWeatherConditions.WeatherConditions.OrderBy(i=>i.Date)
                 };
             }
 

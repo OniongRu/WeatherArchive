@@ -7,7 +7,7 @@
         Time = 1,
         T = 2,
         Humidity = 3,
-        DP = 4,
+        Dp = 4,
         AtmPress = 5,
         WindDir = 6,
         WindS = 7,

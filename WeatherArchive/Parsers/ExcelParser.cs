@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -16,7 +15,7 @@ namespace WeatherArchive.Parsers
     public class ExcelParser
     {
         private static ILogger logger = LoggerFactory.Create(builder => { builder.AddConsole(); }).CreateLogger<ExcelParser>();
-        public static WeatherCondition getWeatherConditionFromRow(IRow row)
+        public static WeatherCondition GetWeatherConditionFromRow(IRow row)
         {
             WeatherCondition rowCondition = new WeatherCondition();
             if (row != null)
@@ -34,7 +33,7 @@ namespace WeatherArchive.Parsers
                         var rusCulture = CultureInfo.GetCultureInfo("ru-RU");
                         if (DateTime.TryParse(s, rusCulture, DateTimeStyles.None, out dt))
                         {
-                            rowCondition.date = dt;
+                            rowCondition.Date = dt;
                         }
                         else
                         {
@@ -54,7 +53,7 @@ namespace WeatherArchive.Parsers
                         float num=0;
                         if (float.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.temperature = num;
+                            rowCondition.Temperature = num;
                         }
                         else
                         {
@@ -73,7 +72,7 @@ namespace WeatherArchive.Parsers
                         float num=0;
                         if (float.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.relativeHumidity = num;
+                            rowCondition.RelativeHumidity = num;
                         }
                         else
                         {
@@ -86,13 +85,13 @@ namespace WeatherArchive.Parsers
                     }
                     
                     //Td
-                    cell = row.GetCell((int) WeatherConditionsFields.DP);
+                    cell = row.GetCell((int) WeatherConditionsFields.Dp);
                     if (cell != null)
                     {
                         float num=0;
                         if (float.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.dewPoint = num;
+                            rowCondition.DewPoint = num;
                         }
                         else
                         {
@@ -111,7 +110,7 @@ namespace WeatherArchive.Parsers
                         ushort num=0;
                         if (ushort.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.atmosphericPressure = num;
+                            rowCondition.AtmosphericPressure = num;
                         }
                         else
                         {
@@ -127,11 +126,11 @@ namespace WeatherArchive.Parsers
                     cell = row.GetCell((int) WeatherConditionsFields.WindDir);
                     if (cell != null)
                     {
-                        rowCondition.windDirection = cell.ToString();
+                        rowCondition.WindDirection = cell.ToString();
                     }
                     else
                     {
-                        rowCondition.windDirection = null;
+                        rowCondition.WindDirection = null;
                     }
                     
                     //скорость ветра
@@ -141,16 +140,16 @@ namespace WeatherArchive.Parsers
                         ushort num=0;
                         if (ushort.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.windSpeed = num;
+                            rowCondition.WindSpeed = num;
                         }
                         else
                         {
-                            rowCondition.windSpeed = null;
+                            rowCondition.WindSpeed = null;
                         }
                     }
                     else
                     {
-                        rowCondition.windSpeed = null;
+                        rowCondition.WindSpeed = null;
                     }
                     
                     //Облачность
@@ -160,16 +159,16 @@ namespace WeatherArchive.Parsers
                         ushort num=0;
                         if (ushort.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.cloudCover = num;
+                            rowCondition.CloudCover = num;
                         }
                         else
                         {
-                            rowCondition.cloudCover = null;
+                            rowCondition.CloudCover = null;
                         }
                     }
                     else
                     {
-                        rowCondition.cloudCover = null;
+                        rowCondition.CloudCover = null;
                     }
                     
                     //h
@@ -179,16 +178,16 @@ namespace WeatherArchive.Parsers
                         ushort num=0;
                         if (ushort.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.downBorderCloudCover = num;
+                            rowCondition.DownBorderCloudCover = num;
                         }
                         else
                         {
-                            rowCondition.downBorderCloudCover = null;
+                            rowCondition.DownBorderCloudCover = null;
                         }
                     }
                     else
                     {
-                        rowCondition.downBorderCloudCover = null;
+                        rowCondition.DownBorderCloudCover = null;
                     }
                     
                     //vv
@@ -198,27 +197,27 @@ namespace WeatherArchive.Parsers
                         ushort num=0;
                         if (ushort.TryParse(cell.ToString(), out num))
                         {
-                            rowCondition.horizontalView = num;
+                            rowCondition.HorizontalView = num;
                         }
                         else
                         {
-                            rowCondition.horizontalView = null;
+                            rowCondition.HorizontalView = null;
                         }
                     }
                     else
                     {
-                        rowCondition.horizontalView = null;
+                        rowCondition.HorizontalView = null;
                     }
                     
                     //погодное явление
                     cell = row.GetCell((int) WeatherConditionsFields.Phenomena);
                     if (cell != null)
                     {
-                        rowCondition.weatherPhenomena = cell.ToString();
+                        rowCondition.WeatherPhenomena = cell.ToString();
                     }
                     else
                     {
-                        rowCondition.weatherPhenomena = null;
+                        rowCondition.WeatherPhenomena = null;
                     }
 
                     return rowCondition;
@@ -259,22 +258,22 @@ namespace WeatherArchive.Parsers
                             for (int j = 4; j <= sheet.LastRowNum; j++) // LastRowNum - общее количество строк в текущей таблице
                             {
                                 IRow row = sheet.GetRow(j); // Считать данные текущей строки
-                                WeatherCondition condition = getWeatherConditionFromRow(row);
+                                WeatherCondition condition = GetWeatherConditionFromRow(row);
                                 
                                 if (condition != null)
                                 {
                                     conditionsFromExcel.Add(new WeatherCondition{
-                                        date = condition.date,
-                                        temperature = condition.temperature,
-                                        relativeHumidity = condition.relativeHumidity,
-                                        dewPoint = condition.dewPoint,
-                                        atmosphericPressure = condition.atmosphericPressure,
-                                        windDirection = condition.windDirection,
-                                        windSpeed = condition.windSpeed,
-                                        cloudCover = condition.cloudCover,
-                                        downBorderCloudCover = condition.downBorderCloudCover,
-                                        horizontalView = condition.horizontalView,
-                                        weatherPhenomena = condition.weatherPhenomena
+                                        Date = condition.Date,
+                                        Temperature = condition.Temperature,
+                                        RelativeHumidity = condition.RelativeHumidity,
+                                        DewPoint = condition.DewPoint,
+                                        AtmosphericPressure = condition.AtmosphericPressure,
+                                        WindDirection = condition.WindDirection,
+                                        WindSpeed = condition.WindSpeed,
+                                        CloudCover = condition.CloudCover,
+                                        DownBorderCloudCover = condition.DownBorderCloudCover,
+                                        HorizontalView = condition.HorizontalView,
+                                        WeatherPhenomena = condition.WeatherPhenomena
                                     });
 
                                 }

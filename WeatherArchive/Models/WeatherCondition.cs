@@ -7,16 +7,16 @@ namespace WeatherArchive.Models
     {
         
         [Key]
-        public DateTime date { get; set; }
-        public float temperature { get; set; }
-        public float relativeHumidity { get; set; }
-        public float dewPoint { get; set; }
-        public ushort atmosphericPressure { get; set; }
-        public string windDirection { get; set; }
-        public System.Nullable<ushort> windSpeed { get; set; }
-        public System.Nullable<ushort> cloudCover { get; set; }
-        public System.Nullable<ushort> downBorderCloudCover { get; set; }
-        public System.Nullable<ushort> horizontalView { get; set; }
-        public string weatherPhenomena { get; set; }
+        public DateTime Date { get; set; }
+        public float Temperature { get; set; }
+        public float RelativeHumidity { get; set; }
+        public float DewPoint { get; set; }
+        public ushort AtmosphericPressure { get; set; }
+        public string WindDirection { get; set; }
+        public System.Nullable<ushort> WindSpeed { get; set; }
+        public System.Nullable<ushort> CloudCover { get; set; }
+        public System.Nullable<ushort> DownBorderCloudCover { get; set; }
+        public System.Nullable<ushort> HorizontalView { get; set; }
+        public string WeatherPhenomena { get; set; }
     }
 }

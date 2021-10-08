@@ -21,52 +21,52 @@
         </thead>
         <tbody>
         @{
-                foreach (var condition in Model.allWeatherCondition)
+                foreach (var condition in Model.AllWeatherCondition)
                 {
                     <tr>
-                        <td>@condition.date.ToShortDateString()</td>
-                        <td>@condition.date.TimeOfDay</td>
-                        <td>@condition.temperature</td>
-                        <td>@condition.relativeHumidity</td>
-                        <td>@condition.dewPoint</td>
-                        <td>@condition.atmosphericPressure</td>
-                        <td>@condition.windDirection</td>
+                        <td>@condition.Date.ToShortDateString()</td>
+                        <td>@condition.Date.TimeOfDay</td>
+                        <td>@condition.Temperature</td>
+                        <td>@condition.RelativeHumidity</td>
+                        <td>@condition.DewPoint</td>
+                        <td>@condition.AtmosphericPressure</td>
+                        <td>@condition.WindDirection</td>
                        
-                        @if (@condition.windSpeed != null)
+                        @if (@condition.WindSpeed != null)
                         {
-                            <td>@condition.windSpeed</td>
+                            <td>@condition.WindSpeed</td>
                         }
                         else
                         {
                             <td>--</td>
                         }
-                        @if (@condition.cloudCover != null)
+                        @if (@condition.CloudCover != null)
                         {
-                            <td>@condition.cloudCover</td>
+                            <td>@condition.CloudCover</td>
                         }
                         else
                         {
                             <td>--</td>
                         }
-                        @if (@condition.downBorderCloudCover != null)
+                        @if (@condition.DownBorderCloudCover != null)
                         {
-                            <td>@condition.downBorderCloudCover</td>
+                            <td>@condition.DownBorderCloudCover</td>
                         }
                         else
                         {
                             <td>--</td>
                         }
-                        @if (@condition.horizontalView != null)
+                        @if (@condition.HorizontalView != null)
                         {
-                            <td>@condition.horizontalView</td>
+                            <td>@condition.HorizontalView</td>
                         }
                         else
                         {
                             <td>--</td>
                         }
-                        @if (@condition.weatherPhenomena != null)
+                        @if (@condition.WeatherPhenomena != null)
                         {
-                            <td>@condition.weatherPhenomena</td>
+                            <td>@condition.WeatherPhenomena</td>
                         }
                         else
                         {

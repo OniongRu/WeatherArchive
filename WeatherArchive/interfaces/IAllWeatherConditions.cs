@@ -5,8 +5,8 @@ namespace WeatherArchive.interfaces
 {
     public interface IAllWeatherConditions
     {
-        void addWeatherConditions(List<WeatherCondition> conditions);
-        IEnumerable<WeatherCondition> weatherConditions { get; }
+        void AddWeatherConditions(List<WeatherCondition> conditions);
+        IEnumerable<WeatherCondition> WeatherConditions { get; }
 
     }
 }
