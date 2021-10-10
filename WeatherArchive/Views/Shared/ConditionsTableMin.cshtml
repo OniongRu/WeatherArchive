@@ -4,14 +4,16 @@
 
 
 <div class="container">
-    
+    <br/>
+    <a href="javascript:prevPage()" id="btn_prev">Предыдущая</a>
+    <a href="javascript:nextPage()" id="btn_next">Следующая</a>
+    Страница: <span id="page1"></span>
     <div id="listingTable"></div>
     <a href="javascript:prevPage()" id="btn_prev">Предыдущая</a>
     <a href="javascript:nextPage()" id="btn_next">Следующая</a>
-    page: <span id="page"></span>
+    Страница: <span id="page2"></span>
     <br/>
-        <br/>
-        <br/>
+    <br/>
 </div>
 
 
@@ -66,7 +68,8 @@ function changePage(page)
 {
     var btn_next = document.getElementById("btn_next");
     var btn_prev = document.getElementById("btn_prev");
-    var page_span = document.getElementById("page");
+    var page_span1 = document.getElementById("page1");
+    var page_span2 = document.getElementById("page2");
     var HTML = "<table class=\"table table-striped\" style=\"width:100%\">";
     HTML += "<thead class=\"thead-dark\">";
     HTML += "<tr align=\"center\">";
@@ -106,8 +109,8 @@ function changePage(page)
     document.getElementById("listingTable").innerHTML = HTML;
     
 
-    page_span.innerHTML = page + "/" + numPages();
-
+    page_span1.innerHTML = page + " из " + numPages();
+    page_span2.innerHTML = page + " из " + numPages();
     if (page == 1) {
         btn_prev.style.visibility = "hidden";
     } else {
