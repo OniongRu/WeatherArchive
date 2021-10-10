@@ -1,4 +1,5 @@
-﻿@model WeatherConditionTableViewModel
+﻿@using System.Text
+@model WeatherConditionTableViewModel
 <div class="container">
     <div class="col">
         <div class="row-md">
@@ -14,6 +15,12 @@
                 <label asp-for="Month">Месяц</label>
                 <div class="row-md">
                     <select asp-for="Month" asp-items="ViewBag.SelectMonths"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="TableType">Тип таблицы</label>
+                <div class="row-md">
+                    <select asp-for="TableType" asp-items="ViewBag.SelectTableType"></select>
                 </div>
             </div>
 
@@ -34,7 +41,15 @@
                     {
                         if (Model.AllWeatherCondition.Any())
                         {
-                            @Html.Partial("ConditionsTable", Model)
+                            if (Model.TableType == 0)
+                            {
+                                @Html.Partial("ConditionsTable", Model)
+                            }
+                            if (Model.TableType == 1)
+                            {
+                                @Html.Partial("ConditionsTableMin", Model)
+                            }
+                            
                         }
                         else
                         {

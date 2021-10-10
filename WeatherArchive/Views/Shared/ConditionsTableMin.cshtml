@@ -1,0 +1,132 @@
+﻿@using System.Text
+@model WeatherConditionTableViewModel
+
+
+
+<div class="container">
+    
+    <div id="listingTable"></div>
+    <a href="javascript:prevPage()" id="btn_prev">Предыдущая</a>
+    <a href="javascript:nextPage()" id="btn_next">Следующая</a>
+    page: <span id="page"></span>
+    <br/>
+        <br/>
+        <br/>
+</div>
+
+
+<script>
+
+class WeatherCondition{
+    constructor(date, time, temperature, relHum, dp, atmospheric, windD, windS, cloudCover, dbCC, horView, phenomena) {
+        this.date = date;
+        this.time = time;
+        this.temperature = temperature;
+        this.relHum = relHum;
+        this.dp = dp;
+        this.atmospheric = atmospheric;
+        this.windD = windD;
+        this.windS = windS;
+        this.cloudCover = cloudCover;
+        this.dbCC = dbCC;
+        this.horView = horView;
+        this.phenomena = phenomena;
+    }    
+
+}
+
+
+var allConditions = [];
+@foreach (var condition in Model.AllWeatherCondition)
+{
+    @:allConditions.push(new WeatherCondition('@condition.Date.ToShortDateString()','@condition.Date.TimeOfDay','@condition.Temperature','@condition.RelativeHumidity','@condition.DewPoint','@condition.AtmosphericPressure','@condition.WindDirection','@condition.WindSpeed','@condition.CloudCover','@condition.DownBorderCloudCover', '@condition.HorizontalView', '@condition.WeatherPhenomena'));
+}
+
+var current_page = 1;
+var records_per_page = 15;
+
+
+function prevPage()
+{
+    if (current_page > 1) {
+        current_page--;
+        changePage(current_page);
+    }
+}
+
+function nextPage()
+{
+    if (current_page < numPages()) {
+        current_page++;
+        changePage(current_page);
+    }
+}
+    
+function changePage(page)
+{
+    var btn_next = document.getElementById("btn_next");
+    var btn_prev = document.getElementById("btn_prev");
+    var page_span = document.getElementById("page");
+    var HTML = "<table class=\"table table-striped\" style=\"width:100%\">";
+    HTML += "<thead class=\"thead-dark\">";
+    HTML += "<tr align=\"center\">";
+    HTML += "<th scope=\"col\">Дата</th>";
+    HTML += "<th scope=\"col\">Время</th>";
+    HTML += "<th scope=\"col\">Температура</th>";
+    HTML += "<th scope=\"col\">Относительная влажность</th>";
+    HTML += "<th scope=\"col\">Точка росы</th>";
+    HTML += "<th scope=\"col\">Атмосферное давление</th>";
+    HTML += "<th scope=\"col\">Направление ветра</th>";
+    HTML += "<th scope=\"col\">Скорость ветра</th>";
+    HTML += "<th scope=\"col\">Облачность</th>";
+    HTML += "<th scope=\"col\">Граница облаков</th>";
+    HTML += "<th scope=\"col\">Дальность видимости</th>";
+    HTML += "<th scope=\"col\">Погодные явления</th>";
+    HTML += "</tr></thead><tbody>";
+
+
+    for (var i = (page-1) * records_per_page; i < (page * records_per_page) && i < allConditions.length; i++)
+    {
+        HTML += "<tr align=\"center\">";
+        HTML += "<th>"+allConditions[i].date+"</th>";
+        HTML += "<th>"+allConditions[i].time+"</th>";
+        HTML += "<th>"+allConditions[i].temperature+"</th>";
+        HTML += "<th>"+allConditions[i].relHum+"</th>";
+        HTML += "<th>"+allConditions[i].dp+"</th>";
+        HTML += "<th>"+allConditions[i].atmospheric+"</th>";
+        HTML += "<th>"+allConditions[i].windD+"</th>";
+        HTML += "<th>"+allConditions[i].windS+"</th>";
+        HTML += "<th>"+allConditions[i].cloudCover+"</t>";
+        HTML += "<th>"+allConditions[i].dbCC+"</th>";
+        HTML += "<th>"+allConditions[i].horView+"</th>";
+        HTML += "<th>"+allConditions[i].phenomena+"</th>";
+        HTML +="</tr>"
+    }
+    HTML += "</tbody></table>";
+    document.getElementById("listingTable").innerHTML = HTML;
+    
+
+    page_span.innerHTML = page + "/" + numPages();
+
+    if (page == 1) {
+        btn_prev.style.visibility = "hidden";
+    } else {
+        btn_prev.style.visibility = "visible";
+    }
+
+    if (page == numPages()) {
+        btn_next.style.visibility = "hidden";
+    } else {
+        btn_next.style.visibility = "visible";
+    }
+}
+
+function numPages()
+{
+    return Math.ceil(allConditions.length / records_per_page);
+}
+
+window.onload = function() {
+    changePage(1);
+};
+</script>

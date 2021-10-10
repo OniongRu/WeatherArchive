@@ -21,61 +21,61 @@
         </thead>
         <tbody>
         @{
-                foreach (var condition in Model.AllWeatherCondition)
-                {
-                    <tr>
-                        <td>@condition.Date.ToShortDateString()</td>
-                        <td>@condition.Date.TimeOfDay</td>
-                        <td>@condition.Temperature</td>
-                        <td>@condition.RelativeHumidity</td>
-                        <td>@condition.DewPoint</td>
-                        <td>@condition.AtmosphericPressure</td>
-                        <td>@condition.WindDirection</td>
+            foreach (var condition in Model.AllWeatherCondition)
+            {
+                <tr>
+                    <td>@condition.Date.ToShortDateString()</td>
+                    <td>@condition.Date.TimeOfDay</td>
+                    <td>@condition.Temperature</td>
+                    <td>@condition.RelativeHumidity</td>
+                    <td>@condition.DewPoint</td>
+                    <td>@condition.AtmosphericPressure</td>
+                    <td>@condition.WindDirection</td>
                        
-                        @if (@condition.WindSpeed != null)
-                        {
-                            <td>@condition.WindSpeed</td>
-                        }
-                        else
-                        {
-                            <td>--</td>
-                        }
-                        @if (@condition.CloudCover != null)
-                        {
-                            <td>@condition.CloudCover</td>
-                        }
-                        else
-                        {
-                            <td>--</td>
-                        }
-                        @if (@condition.DownBorderCloudCover != null)
-                        {
-                            <td>@condition.DownBorderCloudCover</td>
-                        }
-                        else
-                        {
-                            <td>--</td>
-                        }
-                        @if (@condition.HorizontalView != null)
-                        {
-                            <td>@condition.HorizontalView</td>
-                        }
-                        else
-                        {
-                            <td>--</td>
-                        }
-                        @if (@condition.WeatherPhenomena != null)
-                        {
-                            <td>@condition.WeatherPhenomena</td>
-                        }
-                        else
-                        {
-                            <td>--</td>
-                        }
+                    @if (@condition.WindSpeed != null)
+                    {
+                        <td>@condition.WindSpeed</td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+                    @if (@condition.CloudCover != null)
+                    {
+                        <td>@condition.CloudCover</td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+                    @if (@condition.DownBorderCloudCover != null)
+                    {
+                        <td>@condition.DownBorderCloudCover</td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+                    @if (@condition.HorizontalView != null)
+                    {
+                        <td>@condition.HorizontalView</td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+                    @if (@condition.WeatherPhenomena != null)
+                    {
+                        <td>@condition.WeatherPhenomena</td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
                         
-                    </tr>
-                }
+                </tr>
             }
+        }
         </tbody>
     </table>
 </div>

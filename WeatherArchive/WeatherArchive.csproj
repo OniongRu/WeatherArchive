@@ -30,4 +30,8 @@
       <_ContentIncludedByDefault Remove="Views\LoadArchive\LoadInfo.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\Files" />
+    </ItemGroup>
+
 </Project>
