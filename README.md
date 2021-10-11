@@ -7,8 +7,8 @@ Technologies used:
 2. NPOI
 3. Bootstrap
 4. JSON
-5. table style: https://cdn.datatables.net/
-
+5. use table style from: https://cdn.datatables.net/
+6. DB: MS SQL
 
 In new Ver change varibles names in WeatherCondition -> update db
 (Rider ex:)
