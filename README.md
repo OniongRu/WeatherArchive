@@ -1,5 +1,5 @@
 # WeatherArchive
-Demonstration project for «DynamicSun LLC»
+Demonstration project
 
 Technologies used:
 1. AspNetCore (2.2.0)
